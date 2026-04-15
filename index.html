@@ -1,0 +1,1199 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FeastRush – Food Delivery</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── LANDING PAGE SPECIFIC ── */
+
+/* HERO */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 540px;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-left {
+  padding: 80px var(--sp-xl) 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: linear-gradient(135deg, #0D0D0D 55%, #120800 100%);
+  position: relative;
+  z-index: 2;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,69,0,0.12);
+  border: 1px solid rgba(255,69,0,0.3);
+  color: #FF6B35;
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 28px;
+  width: fit-content;
+  animation: fadeDown 0.6s ease both;
+}
+
+.hero-title {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+  animation: fadeDown 0.6s ease 0.1s both;
+}
+.hero-title .hl {
+  background: linear-gradient(135deg, #FF4500, #FFB703);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  max-width: 420px;
+  margin-bottom: 32px;
+  animation: fadeDown 0.6s ease 0.2s both;
+}
+.hero-greet {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.95rem;
+  margin: -8px 0 24px;
+  letter-spacing: 0.01em;
+  animation: fadeDown 0.6s ease 0.25s both;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 44px;
+  animation: fadeDown 0.6s ease 0.3s both;
+}
+.hero-cta .btn-primary { width: auto; padding: 14px 32px; }
+
+.hero-stats {
+  display: flex;
+  gap: 36px;
+  flex-wrap: wrap;
+  animation: fadeDown 0.6s ease 0.4s both;
+}
+.stat strong {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--brand);
+  display: block;
+}
+.stat span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* Hero right image collage */
+.hero-right {
+  position: relative;
+  background: #0a0a0a;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  overflow: hidden;
+}
+.hero-right::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #0D0D0D 0%, transparent 25%);
+  pointer-events: none;
+  z-index: 1;
+}
+.hero-right::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 65%, #0D0D0D 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+.hi { overflow: hidden; }
+.hi img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.85) saturate(1.2);
+  transition: transform 6s ease;
+}
+.hi:hover img { transform: scale(1.07); }
+
+/* Floating order card */
+.float-card {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(18,18,18,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 18px;
+  z-index: 3;
+  white-space: nowrap;
+  animation: fadeUp 0.7s ease 0.5s both;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  min-width: 240px;
+}
+.fc-row { display: flex; align-items: center; gap: 10px; }
+.fc-av {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--brand);
+  flex-shrink: 0;
+}
+.fc-av img { width: 100%; height: 100%; object-fit: cover; }
+.fc-text { flex: 1; }
+.fc-text strong { font-size: 0.83rem; font-weight: 700; display: block; }
+.fc-text small { font-size: 0.72rem; color: var(--text-muted); }
+.fc-status {
+  background: rgba(0,200,83,0.15);
+  border: 1px solid rgba(0,200,83,0.3);
+  color: var(--veg);
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.fc-progress {
+  margin-top: 10px;
+  background: var(--bg3);
+  border-radius: 100px;
+  height: 4px;
+  overflow: hidden;
+}
+.fc-bar {
+  background: linear-gradient(90deg, var(--brand), var(--accent));
+  height: 100%;
+  border-radius: 100px;
+  animation: progress 2s ease infinite alternate;
+}
+
+/* OFFER STRIP */
+.offer-strip {
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
+  overflow: hidden;
+  padding: 12px 0;
+}
+.offer-strip-inner {
+  display: flex;
+  gap: 60px;
+  white-space: nowrap;
+  animation: scrollStrip 22s linear infinite;
+}
+@keyframes scrollStrip { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.offer-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* CATEGORIES */
+.cat-section { padding: var(--sp-xl) var(--sp-xl) 0; }
+.cats {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scrollbar-width: none;
+}
+.cats::-webkit-scrollbar { display: none; }
+.cat-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 20px;
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: var(--ease);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-width: 82px;
+}
+.cat-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--bg3);
+}
+.cat-img img { width: 100%; height: 100%; object-fit: cover; }
+.cat-btn:hover, .cat-btn.active {
+  background: rgba(255,69,0,0.1);
+  border-color: var(--brand);
+  color: var(--text);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(255,69,0,0.18);
+}
+
+/* PROMO BANNER */
+.promo-section { padding: var(--sp-lg) var(--sp-xl) 0; }
+.promo-banner {
+  border-radius: 22px;
+  overflow: hidden;
+  position: relative;
+  height: 210px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.promo-banner img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5) saturate(1.3);
+}
+.pb-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255,69,0,0.65) 0%, transparent 65%);
+}
+.pb-content {
+  position: relative;
+  z-index: 2;
+  padding: 36px 44px;
+  color: #fff;
+}
+.pb-content h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.pb-content p { font-size: 0.9rem; opacity: 0.85; margin-bottom: 18px; }
+.pb-btn {
+  background: #fff;
+  color: var(--brand);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  transition: var(--ease);
+  cursor: pointer;
+}
+.pb-btn:hover { transform: scale(1.04); }
+
+/* RESTAURANTS */
+.rest-section { padding: var(--sp-lg) var(--sp-xl); }
+.rest-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.rest-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--ease);
+}
+.rest-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,69,0,0.12);
+}
+.rest-img { height: 155px; overflow: hidden; position: relative; }
+.rest-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.rest-card:hover .rest-img img { transform: scale(1.06); }
+.rest-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.6) 100%);
+}
+.rest-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(10,10,10,0.8);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.rest-offer {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  background: var(--brand);
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 7px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.rest-body { padding: 14px; }
+.rest-body h3 { font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 3px; font-size: 0.97rem; }
+.rest-body p { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 10px; }
+.rest-meta { display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; flex-wrap: wrap; gap: 4px; }
+.star { color: var(--accent); font-weight: 700; }
+.dtime { color: var(--text-muted); }
+.rest-tags { display: flex; gap: 5px; margin-top: 8px; flex-wrap: wrap; }
+.rtag {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+/* MENU SECTION */
+#menu { padding: var(--sp-lg) var(--sp-xl) 0; }
+.menu-head { margin-bottom: 24px; }
+.menu-head h2 { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 800; }
+.menu-head p { color: var(--text-muted); margin-top: 6px; }
+
+.filter-bar {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  align-items: center;
+}
+.fg { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.flabel {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+.fbtn {
+  padding: 7px 14px;
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  transition: var(--ease);
+  white-space: nowrap;
+}
+.fbtn:hover, .fbtn.active { background: rgba(255,69,0,0.1); border-color: var(--brand); color: var(--text); }
+.fbtn.veg.active { border-color: var(--veg); color: var(--veg); background: rgba(0,200,83,0.1); }
+.fbtn.nv.active  { border-color: var(--nonveg); color: var(--nonveg); background: rgba(255,23,68,0.1); }
+
+.sort-sel {
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: var(--text);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--ease);
+}
+.sort-sel:focus { border-color: var(--brand); }
+
+/* Search bar in menu */
+.menu-search {
+  flex: 1;
+  min-width: 160px;
+  position: relative;
+}
+.menu-search input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 8px 14px 8px 36px;
+  color: var(--text);
+  font-size: 0.8rem;
+  transition: var(--ease);
+}
+.menu-search input:focus { border-color: var(--brand); }
+.menu-search input::placeholder { color: #444; }
+.menu-search-ico {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #444;
+  font-size: 0.85rem;
+  pointer-events: none;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding-bottom: var(--sp-xl);
+}
+.mc {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: var(--ease);
+}
+.mc:hover { transform: translateY(-4px); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+.mc-img { height: 165px; overflow: hidden; position: relative; }
+.mc-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.mc:hover .mc-img img { transform: scale(1.07); }
+.veg-dot {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  border: 2.5px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.75);
+}
+.veg-dot::after { content: '●'; font-size: 9px; }
+.veg-dot.veg  { border-color: var(--veg); color: var(--veg); }
+.veg-dot.nv   { border-color: var(--nonveg); color: var(--nonveg); }
+.mc-disc {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--brand);
+  color: #fff;
+  border-radius: 8px;
+  padding: 3px 9px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.mc-body { padding: 14px; }
+.mc-body h3 { font-family: 'Syne', sans-serif; font-weight: 700; margin-bottom: 5px; font-size: 0.97rem; }
+.mc-body .desc { font-size: 0.76rem; color: var(--text-muted); margin-bottom: 12px; line-height: 1.6; }
+.mc-foot { display: flex; align-items: center; justify-content: space-between; }
+.price-col .price { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--brand); }
+.price-col .orig { font-size: 0.76rem; color: var(--text-muted); text-decoration: line-through; }
+.stars { font-size: 0.76rem; color: var(--accent); font-weight: 700; margin-top: 2px; }
+.add-btn {
+  background: linear-gradient(135deg, var(--brand), var(--brand-light));
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 16px;
+  font-size: 0.83rem;
+  font-weight: 700;
+  transition: var(--ease);
+  white-space: nowrap;
+}
+.add-btn:hover { transform: scale(1.06); box-shadow: 0 6px 16px rgba(255,69,0,0.4); }
+.add-btn:active { transform: scale(0.97); }
+.no-res { grid-column: 1/-1; text-align: center; padding: 80px; color: var(--text-muted); font-size: 1rem; }
+
+.search-hit {
+  background: rgba(255, 183, 3, 0.24);
+  color: #ffd45e;
+  border-radius: 4px;
+  padding: 0 2px;
+}
+
+.recent-section {
+  padding: var(--sp-md) var(--sp-xl) 0;
+}
+.recent-wrap {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 16px;
+}
+.recent-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.recent-head h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+.recent-clear {
+  border: 1px solid var(--border);
+  background: var(--bg3);
+  color: var(--text-muted);
+  border-radius: 10px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+.recent-clear:hover {
+  color: var(--text);
+  border-color: var(--brand);
+}
+.recent-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+.recent-item {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: var(--bg2);
+  border-radius: 12px;
+  padding: 8px;
+}
+.recent-thumb {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+.recent-item strong {
+  display: block;
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
+.recent-item small {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.mc { will-change: transform; }
+
+/* Navbar search */
+.nav-search {
+  flex: 1;
+  position: relative;
+  max-width: 400px;
+}
+.nav-search input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 40px 10px 16px;
+  color: var(--text);
+  font-size: 0.88rem;
+  transition: var(--ease);
+}
+.nav-search input:focus { border-color: var(--brand); background: rgba(255,69,0,0.04); }
+.nav-search input::placeholder { color: #444; }
+.search-ico {
+  position: absolute;
+  right: 13px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #444;
+  pointer-events: none;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .rest-grid { grid-template-columns: repeat(2, 1fr); }
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }
+  .recent-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-right { display: none; }
+  .hero-left { padding: 60px var(--sp-md) 48px; }
+  .hero-stats { gap: 20px; }
+}
+
+@media (max-width: 768px) {
+  .cat-section { padding: var(--sp-md) var(--sp-sm) 0; }
+  .promo-section { padding: var(--sp-md) var(--sp-sm) 0; }
+  .rest-section { padding: var(--sp-md) var(--sp-sm); }
+  .recent-section { padding: var(--sp-md) var(--sp-sm) 0; }
+  #menu { padding: var(--sp-md) var(--sp-sm) 0; }
+
+  .rest-grid { grid-template-columns: 1fr; }
+  .menu-grid { grid-template-columns: 1fr; padding-bottom: var(--sp-md); }
+
+  .promo-banner { height: 180px; }
+  .pb-content { padding: 24px 24px; }
+
+  .filter-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .menu-search { width: 100%; }
+
+  .hero-cta { flex-direction: column; }
+  .hero-cta .btn-primary, .hero-cta .btn-secondary { width: 100%; }
+  .hero-title { font-size: 2rem; }
+  .recent-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .hero-left { padding: 48px var(--sp-sm) 36px; }
+  .hero-stats { gap: 16px; }
+  .stat strong { font-size: 1.3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" style="position:sticky">
+  <a href="index.html" class="nav-brand">🔥 FeastRush</a>
+  <div class="nav-search">
+    <input type="text" id="searchInput" placeholder="Search dishes, restaurants..."/>
+    <svg class="search-ico" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="#menu" class="nav-link">Menu</a>
+    <a href="contact.html" class="nav-link">Contact</a>
+    <button class="cart-btn" id="cartToggle">🛒 <span class="cart-badge" id="cartCount">0</span></button>
+    <div class="user-av" id="navAvatar">U</div>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="nav-link active">Home</a>
+  <a href="#menu" class="nav-link" onclick="document.getElementById('mobileMenu').classList.remove('open');document.getElementById('hamburger').classList.remove('open')">Menu</a>
+  <a href="contact.html" class="nav-link">Contact</a>
+  <button class="cart-btn" style="justify-content:center" id="cartToggleMobile">🛒 Cart <span class="cart-badge" id="cartCountMobile">0</span></button>
+  <button class="btn-logout" onclick="logout()">Logout</button>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h3>Your Cart 🛒</h3>
+    <button class="close-btn" id="closeCart">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div id="cartEmpty" class="cart-empty-state">
+    <div class="ei">🍽️</div>
+    <p>Your cart is empty</p>
+    <small>Add some mouthwatering items from our menu!</small>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-total-row">Total <strong id="cartTotal">₹0</strong></div>
+    <button class="btn-primary" onclick="placeOrder()">Place Order 🎉</button>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="modal-bg" id="orderModal" style="display:none">
+  <div class="modal-card">
+    <div class="mico">🎉</div>
+    <h2>Order Placed!</h2>
+    <p>Your food is being prepared. Estimated delivery: <strong>28–35 mins</strong></p>
+    <div class="order-id-box" id="orderId"></div>
+    <button class="btn-primary" onclick="closeModal()">Track Order 📍</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">🚀 30-minute delivery guaranteed</div>
+    <h1 class="hero-title">
+      Hungry? <span class="hl">We've got<br/>you covered.</span>
+    </h1>
+    <p class="hero-sub">Order from 500+ top-rated restaurants. Freshly cooked, lightning fast, delivered right to your door.</p>
+    <p class="hero-greet" id="smartGreeting"></p>
+    <div class="hero-cta">
+      <button class="btn-primary" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Explore Menu 🍕</button>
+      <a href="contact.html" class="btn-secondary">Contact Us</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><strong>500+</strong><span>Restaurants</span></div>
+      <div class="stat"><strong>2M+</strong><span>Happy Users</span></div>
+      <div class="stat"><strong>4.8★</strong><span>Avg Rating</span></div>
+      <div class="stat"><strong>30 min</strong><span>Avg Delivery</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hi"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80&auto=format&fit=crop" alt="pizza" loading="eager"/></div>
+    <div class="hi"><img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80&auto=format&fit=crop" alt="burger" loading="eager"/></div>
+    <div class="hi"><img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600&q=80&auto=format&fit=crop" alt="sushi" loading="eager"/></div>
+    <div class="hi"><img src="https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=600&q=80&auto=format&fit=crop" alt="biryani" loading="eager"/></div>
+    <div class="float-card">
+      <div class="fc-row">
+        <div class="fc-av">
+          <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=80&q=80&auto=format&fit=crop&crop=face" alt="user"/>
+        </div>
+        <div class="fc-text">
+          <strong>Rahul's order is on the way! 🛵</strong>
+          <small>Biryani House · 2.3 km away</small>
+        </div>
+        <span class="fc-status">On Route</span>
+      </div>
+      <div class="fc-progress"><div class="fc-bar" style="width:65%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- OFFER STRIP -->
+<div class="offer-strip" aria-hidden="true">
+  <div class="offer-strip-inner" id="offerStrip"></div>
+</div>
+
+<!-- CATEGORIES -->
+<div class="cat-section">
+  <div class="section-head">
+    <h2 class="section-title">What are you craving?</h2>
+    <button class="see-all-btn" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">See all →</button>
+  </div>
+  <div class="cats" id="catsContainer"></div>
+</div>
+
+<!-- PROMO BANNER 1 -->
+<div class="promo-section">
+  <div class="promo-banner" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=80&auto=format&fit=crop" alt="promo" loading="lazy"/>
+    <div class="pb-overlay"></div>
+    <div class="pb-content">
+      <h3>50% OFF your first order! 🎉</h3>
+      <p>Use code <strong>FEAST50</strong> at checkout · Valid today only</p>
+      <button class="pb-btn">Order Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- RESTAURANTS -->
+<div class="rest-section">
+  <div class="section-head">
+    <h2 class="section-title">Popular Restaurants</h2>
+    <button class="see-all-btn" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">View all →</button>
+  </div>
+  <div class="rest-grid" id="restGrid"></div>
+</div>
+
+<!-- RECENTLY VIEWED -->
+<section class="recent-section" id="recentSection" style="display:none">
+  <div class="recent-wrap">
+    <div class="recent-head">
+      <h3>Recently Viewed</h3>
+      <button class="recent-clear" id="clearRecentBtn" type="button">Clear</button>
+    </div>
+    <div class="recent-grid" id="recentGrid"></div>
+  </div>
+</section>
+
+<!-- PROMO BANNER 2 -->
+<div class="promo-section" style="padding-bottom: 0;">
+  <div class="promo-banner" style="height:170px" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+    <img src="https://images.unsplash.com/photo-1562802378-063ec186a863?w=1200&q=80&auto=format&fit=crop" alt="promo2" loading="lazy"/>
+    <div class="pb-overlay" style="background:linear-gradient(90deg,rgba(255,183,3,0.65) 0%,transparent 60%)"></div>
+    <div class="pb-content">
+      <h3 style="color:#111">Free delivery all weekend 🛵</h3>
+      <p style="color:rgba(0,0,0,0.65)">No minimum order required</p>
+      <button class="pb-btn" style="background:var(--brand);color:#fff">Grab the deal</button>
+    </div>
+  </div>
+</div>
+
+<!-- MENU SECTION -->
+<section id="menu">
+  <div class="menu-head">
+    <h2>Full Menu</h2>
+    <p>Browse our 200+ dishes from top restaurants near you</p>
+  </div>
+
+  <div class="filter-bar">
+    <div class="fg">
+      <span class="flabel">Diet:</span>
+      <button class="fbtn active" data-diet="all">All</button>
+      <button class="fbtn veg" data-diet="veg">🟢 Veg</button>
+      <button class="fbtn nv" data-diet="nonveg">🔴 Non-Veg</button>
+    </div>
+    <div class="fg">
+      <span class="flabel">Cuisine:</span>
+      <button class="fbtn active" data-cuisine="all">All</button>
+      <button class="fbtn" data-cuisine="indian">🇮🇳 Indian</button>
+      <button class="fbtn" data-cuisine="italian">🇮🇹 Italian</button>
+      <button class="fbtn" data-cuisine="chinese">🥢 Chinese</button>
+      <button class="fbtn" data-cuisine="japanese">🍱 Japanese</button>
+    </div>
+    <div class="fg">
+      <span class="flabel">Sort:</span>
+      <select class="sort-sel" id="sortSel">
+        <option value="default">Default</option>
+        <option value="price-asc">Price ↑</option>
+        <option value="price-desc">Price ↓</option>
+        <option value="rating">Top Rated</option>
+      </select>
+    </div>
+    <div class="menu-search">
+      <span class="menu-search-ico">🔍</span>
+      <input type="text" id="menuSearch" placeholder="Search dishes..."/>
+    </div>
+  </div>
+
+  <div class="menu-grid" id="menuGrid"></div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="page-wrap">
+    <div class="footer-grid">
+      <div>
+        <span class="footer-brand-name">🔥 FeastRush</span>
+        <p class="footer-desc">Bringing the best food from your favourite restaurants right to your doorstep. Fast, fresh, and always delicious.</p>
+        <div class="social-row">
+          <a class="social-btn" href="#" aria-label="Twitter">𝕏</a>
+          <a class="social-btn" href="#" aria-label="Facebook">f</a>
+          <a class="social-btn" href="#" aria-label="Instagram">📷</a>
+          <a class="social-btn" href="#" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="contact.html">Contact Us</a><a href="#">FAQ</a><a href="#">Privacy Policy</a><a href="#">Terms</a>
+      </div>
+      <div class="footer-col">
+        <h4>Cities</h4>
+        <a href="#">Bangalore</a><a href="#">Mumbai</a><a href="#">Delhi</a><a href="#">Hyderabad</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 FeastRush Technologies Pvt. Ltd. All rights reserved. Made with ❤️ in India</span>
+      <div style="display:flex;gap:16px">
+        <a href="#" style="color:var(--text-muted);font-size:0.8rem">Privacy</a>
+        <a href="#" style="color:var(--text-muted);font-size:0.8rem">Terms</a>
+        <a href="#" style="color:var(--text-muted);font-size:0.8rem">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+'use strict';
+
+// ── Filter state ──
+let dietFilter = 'all', cuisineFilter = 'all', sortMode = 'default', searchQ = '';
+const RECENT_KEY = 'fr_recent_items';
+const MAX_RECENT = 5;
+let recentViewed = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Auth guard
+  if (!Auth.isLoggedIn()) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  renderOfferStrip();
+  renderCategories();
+  renderRestaurants();
+  renderMenu();
+  initFilters();
+  initSearch();
+  initRecentlyViewed();
+  initMobileCartBtn();
+});
+
+// ── Offer strip ──
+const OFFER_CHIPS = [
+  '🔥 50% OFF on Biryani','🆓 Free delivery on ₹199+','🍕 Pizza at ₹99',
+  '🎁 Use code FEAST50','⚡ Order in 2 mins','🌟 Rated 4.8/5 by 50K users',
+  '🛵 Track live on map','💯 100% Fresh & Hygienic',
+];
+function renderOfferStrip() {
+  const el = document.getElementById('offerStrip');
+  if (!el) return;
+  const doubled = [...OFFER_CHIPS, ...OFFER_CHIPS];
+  el.innerHTML = doubled.map(c => `<span class="offer-chip">${c}</span>`).join('');
+}
+
+// ── Categories ──
+function renderCategories() {
+  const el = document.getElementById('catsContainer');
+  if (!el) return;
+  el.innerHTML = CATEGORIES_DATA.map((c, i) => `
+    <button class="cat-btn${i===0?' active':''}" onclick="pickCategory(this,'${c.id}')">
+      <div class="cat-img"><img src="${c.img}" alt="${c.name}" loading="lazy"/></div>
+      ${c.name}
+    </button>`).join('');
+}
+
+function pickCategory(btn, id) {
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const map = {pizza:'italian',burger:'indian',sushi:'japanese',biryani:'indian',salad:'italian',dessert:'italian',drinks:'indian'};
+  cuisineFilter = map[id] || 'all';
+  dietFilter = 'all';
+  searchQ = '';
+  document.getElementById('menuSearch').value = '';
+  document.querySelectorAll('[data-cuisine]').forEach(b => b.classList.toggle('active', b.dataset.cuisine === cuisineFilter || (cuisineFilter==='all' && b.dataset.cuisine==='all')));
+  renderMenu();
+  document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ── Restaurants ──
+function renderRestaurants() {
+  const grid = document.getElementById('restGrid');
+  if (!grid) return;
+  grid.innerHTML = RESTAURANTS_DATA.map((r, i) => `
+    <div class="rest-card fade-in" style="animation-delay:${i*0.07}s"
+      onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">
+      <div class="rest-img">
+        <img src="${r.img}" alt="${r.name}" loading="lazy"/>
+        <div class="rest-img-overlay"></div>
+        <span class="rest-tag">${r.tag}</span>
+        <span class="rest-offer">${r.offer}</span>
+      </div>
+      <div class="rest-body">
+        <h3>${r.name}</h3>
+        <p>${r.cuisine}</p>
+        <div class="rest-meta">
+          <span class="star">⭐ ${r.rating}</span>
+          <span class="dtime">🕐 ${r.time}</span>
+          <span style="color:var(--text-muted);font-size:0.72rem">Free delivery</span>
+        </div>
+        <div class="rest-tags">${r.tags.map(t=>`<span class="rtag">${t}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Filters ──
+function initFilters() {
+  document.querySelectorAll('[data-diet]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-diet]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    dietFilter = b.dataset.diet;
+    renderMenu();
+  }));
+  document.querySelectorAll('[data-cuisine]').forEach(b => b.addEventListener('click', () => {
+    document.querySelectorAll('[data-cuisine]').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    cuisineFilter = b.dataset.cuisine;
+    renderMenu();
+  }));
+  document.getElementById('sortSel').addEventListener('change', e => {
+    sortMode = e.target.value;
+    renderMenu();
+  });
+}
+
+// ── Search ──
+function initSearch() {
+  let deb;
+  // Navbar search
+  document.getElementById('searchInput')?.addEventListener('input', e => {
+    clearTimeout(deb);
+    deb = setTimeout(() => {
+      searchQ = e.target.value.toLowerCase().trim();
+      document.getElementById('menuSearch').value = searchQ;
+      renderMenu();
+      if (searchQ) document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+    }, 280);
+  });
+  // Menu search
+  document.getElementById('menuSearch')?.addEventListener('input', e => {
+    clearTimeout(deb);
+    deb = setTimeout(() => {
+      searchQ = e.target.value.toLowerCase().trim();
+      document.getElementById('searchInput').value = searchQ;
+      renderMenu();
+    }, 280);
+  });
+}
+
+// ── Render menu ──
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (ch) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]
+  ));
+}
+
+function markMatches(text, query) {
+  const safeText = String(text || '');
+  if (!query) return escapeHtml(safeText);
+  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  if (!escapedQuery) return escapeHtml(safeText);
+  const rgx = new RegExp(`(${escapedQuery})`, 'ig');
+  return escapeHtml(safeText).replace(rgx, '<mark class="search-hit">$1</mark>');
+}
+
+function runMenuFlip(grid, nextItems) {
+  const oldRects = new Map();
+  grid.querySelectorAll('.mc[data-item-id]').forEach((card) => {
+    oldRects.set(card.dataset.itemId, card.getBoundingClientRect());
+  });
+
+  grid.innerHTML = nextItems.map((item, i) => renderMenuCard(item, i)).join('');
+  Motion.refresh(grid);
+
+  const cards = [...grid.querySelectorAll('.mc')];
+  cards.forEach((card, i) => {
+    const item = nextItems[i];
+    if (!item) return;
+    card.dataset.itemId = String(item.id);
+
+    const title = card.querySelector('h3');
+    const desc = card.querySelector('.desc');
+    if (title) title.innerHTML = markMatches(item.name, searchQ);
+    if (desc) desc.innerHTML = markMatches(item.desc, searchQ);
+  });
+
+  cards.forEach((card) => {
+    const old = oldRects.get(card.dataset.itemId);
+    if (!old) return;
+    const now = card.getBoundingClientRect();
+    const dx = old.left - now.left;
+    const dy = old.top - now.top;
+    if (!dx && !dy) return;
+    card.style.transition = 'transform 0s';
+    card.style.transform = `translate(${dx}px, ${dy}px)`;
+    requestAnimationFrame(() => {
+      card.style.transition = 'transform 360ms cubic-bezier(.22,.61,.36,1)';
+      card.style.transform = '';
+    });
+  });
+}
+
+function loadRecentViewed() {
+  try {
+    const stored = JSON.parse(sessionStorage.getItem(RECENT_KEY) || '[]');
+    return Array.isArray(stored) ? stored.filter((x) => Number.isInteger(x)) : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveRecentViewed() {
+  sessionStorage.setItem(RECENT_KEY, JSON.stringify(recentViewed));
+}
+
+function renderRecentViewed() {
+  const section = document.getElementById('recentSection');
+  const grid = document.getElementById('recentGrid');
+  if (!section || !grid) return;
+
+  const items = recentViewed
+    .map((id) => MENU_DATA.find((m) => m.id === id))
+    .filter(Boolean);
+
+  if (!items.length) {
+    section.style.display = 'none';
+    grid.innerHTML = '';
+    return;
+  }
+
+  section.style.display = 'block';
+  grid.innerHTML = items.map((item) => `
+    <article class="recent-item">
+      <img class="recent-thumb" src="${item.img}" alt="${item.name}" loading="lazy"/>
+      <div>
+        <strong>${item.name}</strong>
+        <small>₹${item.price} · ${item.cuisine}</small>
+      </div>
+    </article>
+  `).join('');
+}
+
+function addRecentViewed(itemId) {
+  if (!itemId) return;
+  recentViewed = [itemId, ...recentViewed.filter((id) => id !== itemId)].slice(0, MAX_RECENT);
+  saveRecentViewed();
+  renderRecentViewed();
+}
+
+function initRecentlyViewed() {
+  recentViewed = loadRecentViewed();
+  renderRecentViewed();
+
+  const grid = document.getElementById('menuGrid');
+  grid?.addEventListener('click', (e) => {
+    const card = e.target.closest('.mc');
+    if (!card) return;
+    const itemId = Number(card.dataset.itemId);
+    if (Number.isInteger(itemId)) addRecentViewed(itemId);
+  });
+
+  document.getElementById('clearRecentBtn')?.addEventListener('click', () => {
+    recentViewed = [];
+    saveRecentViewed();
+    renderRecentViewed();
+  });
+}
+
+function renderMenu() {
+  let items = [...MENU_DATA];
+  if (dietFilter !== 'all')    items = items.filter(i => i.type === dietFilter);
+  if (cuisineFilter !== 'all') items = items.filter(i => i.cuisine === cuisineFilter);
+  if (searchQ) items = items.filter(i =>
+    i.name.toLowerCase().includes(searchQ) ||
+    i.desc.toLowerCase().includes(searchQ) ||
+    i.cuisine.toLowerCase().includes(searchQ)
+  );
+  if (sortMode === 'price-asc')  items.sort((a, b) => a.price - b.price);
+  if (sortMode === 'price-desc') items.sort((a, b) => b.price - a.price);
+  if (sortMode === 'rating')     items.sort((a, b) => b.rating - a.rating);
+
+  const grid = document.getElementById('menuGrid');
+  if (!grid) return;
+  if (!items.length) {
+    grid.innerHTML = '<div class="no-res">?? No items match your filters. Try adjusting them!</div>';
+    Motion.refresh(grid);
+    return;
+  }
+  runMenuFlip(grid, items);
+}
+
+function initMobileCartBtn() {
+  document.getElementById('cartToggleMobile')?.addEventListener('click', () => {
+    document.getElementById('cartSidebar').classList.add('open');
+    document.getElementById('cartOverlay').classList.add('open');
+    Cart.renderItems();
+  });
+}
+</script>
+</body>
+</html>
+
+

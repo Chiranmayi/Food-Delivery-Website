@@ -1,0 +1,621 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FeastRush – Create Account</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── REGISTER PAGE SPECIFIC ── */
+body { display: flex; align-items: stretch; }
+
+.register-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ── LEFT VISUAL PANEL ── */
+.reg-visual {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 48px;
+  min-height: 100vh;
+}
+
+.reg-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  filter: saturate(1.2) brightness(0.75);
+}
+
+.reg-visual-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    170deg,
+    rgba(255,183,3,0.25) 0%,
+    rgba(0,0,0,0.05) 25%,
+    rgba(0,0,0,0.9) 100%
+  );
+}
+
+.visual-brand-top {
+  position: absolute;
+  top: 40px;
+  left: 48px;
+  z-index: 3;
+}
+
+.visual-brand-top a {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF6B35, #FFB703);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+}
+
+.reg-content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+}
+
+.reg-content h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+
+.reg-content h2 span {
+  background: linear-gradient(135deg, #FF6B35, #FFB703);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.reg-content p {
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.65;
+  margin-bottom: 28px;
+  max-width: 380px;
+}
+
+/* Perks list */
+.perks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.perk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.perk-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.perk-text strong {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.perk-text span {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* ── RIGHT FORM PANEL ── */
+.reg-form-panel {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 40px;
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+}
+
+.reg-box {
+  width: 100%;
+  max-width: 480px;
+  padding: 20px 0;
+}
+
+.reg-box-brand {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF6B35, #FFB703);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  text-decoration: none;
+}
+
+.reg-box h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+
+.reg-subtitle { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 28px; }
+
+/* Progress indicator */
+.progress-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+}
+.step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.step.active .step-num { background: var(--brand); border-color: var(--brand); color: #fff; }
+.step.active { color: var(--text); }
+.step.done .step-num { background: var(--veg); border-color: var(--veg); color: #fff; }
+.step-line { flex: 1; height: 1.5px; background: var(--border); margin: 0 8px; }
+
+.reg-form-wrap { display: flex; flex-direction: column; gap: 14px; }
+
+/* Password strength */
+.pass-strength {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+.strength-track {
+  flex: 1;
+  height: 4px;
+  background: var(--bg3);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.strength-fill {
+  height: 100%;
+  border-radius: 99px;
+  transition: width 0.3s, background 0.3s;
+  width: 0%;
+}
+.strength-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  min-width: 60px;
+  text-align: right;
+}
+
+.terms-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.terms-row input { margin-top: 2px; accent-color: var(--brand); flex-shrink: 0; }
+.terms-row a { color: var(--brand); }
+.terms-row a:hover { text-decoration: underline; }
+
+.login-link {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.login-link a { color: var(--brand); font-weight: 700; }
+.login-link a:hover { text-decoration: underline; }
+
+/* Mobile brand */
+.mobile-brand-header {
+  display: none;
+  text-align: center;
+  margin-bottom: 28px;
+}
+.mobile-brand-header a {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF6B35, #FFB703);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+}
+.mobile-brand-header p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  .register-page { grid-template-columns: 1fr; }
+  .reg-visual { display: none; }
+  .reg-form-panel {
+    border-left: none;
+    padding: 40px 24px;
+    min-height: 100vh;
+    background: var(--bg);
+    align-items: center;
+  }
+  .mobile-brand-header { display: block; }
+  .reg-box { padding: 0; }
+}
+
+@media (max-width: 480px) {
+  .reg-form-panel { padding: 32px 16px; }
+  .reg-box h3 { font-size: 1.4rem; }
+  .progress-steps { gap: 0; }
+  .step span:not(.step-num) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="register-page">
+
+  <!-- LEFT: Visual Panel -->
+  <div class="reg-visual">
+    <img class="reg-bg-img" src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=900&q=85&auto=format&fit=crop" alt="restaurant"/>
+    <div class="reg-visual-overlay"></div>
+
+    <div class="visual-brand-top">
+      <a href="index.html">🔥 FeastRush</a>
+    </div>
+
+    <div class="reg-content">
+      <h2>Join <span>2 million+</span><br/>happy foodies</h2>
+      <p>Create your free account and start ordering from the best restaurants in your city — in under 2 minutes.</p>
+
+      <div class="perks-list">
+        <div class="perk-item">
+          <div class="perk-icon">🎁</div>
+          <div class="perk-text">
+            <strong>50% off your first order</strong>
+            <span>Use code FEAST50 at checkout</span>
+          </div>
+        </div>
+        <div class="perk-item">
+          <div class="perk-icon">🛵</div>
+          <div class="perk-text">
+            <strong>Free delivery for 30 days</strong>
+            <span>On any order, any restaurant</span>
+          </div>
+        </div>
+        <div class="perk-item">
+          <div class="perk-icon">🔔</div>
+          <div class="perk-text">
+            <strong>Real-time order tracking</strong>
+            <span>Know exactly when food arrives</span>
+          </div>
+        </div>
+        <div class="perk-item">
+          <div class="perk-icon">💳</div>
+          <div class="perk-text">
+            <strong>Cashback on every order</strong>
+            <span>Earn points, redeem for discounts</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Form Panel -->
+  <div class="reg-form-panel">
+    <div class="reg-box">
+
+      <!-- Mobile brand -->
+      <div class="mobile-brand-header">
+        <a href="index.html">🔥 FeastRush</a>
+        <p>Your favourite food, delivered fast</p>
+      </div>
+
+      <a href="index.html" class="reg-box-brand">🔥 FeastRush</a>
+      <h3>Create your account ✨</h3>
+      <p class="reg-subtitle">It's free and takes less than 2 minutes</p>
+
+      <div class="progress-steps">
+        <div class="step active">
+          <span class="step-num">1</span>
+          <span>Your Info</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <span class="step-num">2</span>
+          <span>Address</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step">
+          <span class="step-num">3</span>
+          <span>Done!</span>
+        </div>
+      </div>
+
+      <form id="registerForm" class="reg-form-wrap" novalidate>
+
+        <div class="form-row">
+          <div class="field">
+            <label for="r-fname">First Name</label>
+            <input type="text" id="r-fname" placeholder="Jane" autocomplete="given-name"/>
+            <span class="field-err" id="r-fname-err"></span>
+          </div>
+          <div class="field">
+            <label for="r-lname">Last Name</label>
+            <input type="text" id="r-lname" placeholder="Doe" autocomplete="family-name"/>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="r-email">Email Address</label>
+          <input type="email" id="r-email" placeholder="you@email.com" autocomplete="email"/>
+          <span class="field-err" id="r-email-err"></span>
+        </div>
+
+        <div class="field">
+          <label for="r-phone">Phone Number</label>
+          <input type="tel" id="r-phone" placeholder="+91 9876 543 210" autocomplete="tel"/>
+          <span class="field-err" id="r-phone-err"></span>
+        </div>
+
+        <div class="field">
+          <label for="r-pass">Password</label>
+          <div style="position:relative">
+            <input type="password" id="r-pass" placeholder="Min 8 characters" autocomplete="new-password" style="padding-right:46px"/>
+            <button type="button" id="regPassToggle"
+              style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text-muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:0;">
+              👁
+            </button>
+          </div>
+          <div class="pass-strength" id="strengthWrap">
+            <div class="strength-track">
+              <div class="strength-fill" id="strengthFill"></div>
+            </div>
+            <span class="strength-label" id="strengthLabel" style="color:var(--text-muted)">—</span>
+          </div>
+          <span class="field-err" id="r-pass-err"></span>
+        </div>
+
+        <div class="field">
+          <label for="r-city">City / Area</label>
+          <input type="text" id="r-city" placeholder="Koramangala, Bangalore" autocomplete="address-level2"/>
+          <span class="field-err" id="r-city-err"></span>
+        </div>
+
+        <div class="field">
+          <label for="r-ref">Referral Code (Optional)</label>
+          <input type="text" id="r-ref" placeholder="e.g. FEAST50" autocomplete="off"/>
+        </div>
+
+        <div class="terms-row">
+          <input type="checkbox" id="r-terms"/>
+          <label for="r-terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>. I'm happy to receive offers & updates.</label>
+        </div>
+        <span class="field-err" id="r-terms-err"></span>
+
+        <button type="submit" class="btn-primary">Create Account →</button>
+
+        <div class="divider"><span>or sign up with</span></div>
+        <button type="button" class="btn-google" onclick="googleLogin()">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+          </svg>
+          Continue with Google
+        </button>
+
+        <p class="login-link">Already have an account? <a href="login.html">Login →</a></p>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+'use strict';
+
+document.addEventListener('DOMContentLoaded', () => {
+  if (Auth.isLoggedIn()) {
+    window.location.href = 'index.html';
+    return;
+  }
+
+  // Password visibility toggle
+  const passInput = document.getElementById('r-pass');
+  const toggleBtn = document.getElementById('regPassToggle');
+  if (toggleBtn && passInput) {
+    toggleBtn.addEventListener('click', () => {
+      const isPass = passInput.type === 'password';
+      passInput.type = isPass ? 'text' : 'password';
+      toggleBtn.textContent = isPass ? '🙈' : '👁';
+    });
+  }
+
+  // Password strength meter
+  passInput?.addEventListener('input', () => {
+    const v = passInput.value;
+    const fill = document.getElementById('strengthFill');
+    const label = document.getElementById('strengthLabel');
+    if (!fill || !label) return;
+
+    let score = 0;
+    if (v.length >= 8) score++;
+    if (/[A-Z]/.test(v)) score++;
+    if (/[0-9]/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    if (v.length >= 12) score++;
+
+    const levels = [
+      { w:'0%',   c:'transparent', t:'—'          },
+      { w:'25%',  c:'#FF4757',     t:'Weak'       },
+      { w:'50%',  c:'#FF8C00',     t:'Fair'       },
+      { w:'75%',  c:'#FFB703',     t:'Good'       },
+      { w:'90%',  c:'#00C853',     t:'Strong'     },
+      { w:'100%', c:'#00C853',     t:'Very Strong' },
+    ];
+    const lvl = v.length ? levels[score] || levels[0] : levels[0];
+    fill.style.width = lvl.w;
+    fill.style.background = lvl.c;
+    label.textContent = lvl.t;
+    label.style.color = lvl.c || 'var(--text-muted)';
+
+    if (!v) clrInputError(passInput, 'r-pass-err');
+    else if (v.length >= 8) setInputValid(passInput, 'r-pass-err', 'Strong enough');
+    else setInputError(passInput, 'r-pass-err', 'Password must be at least 8 characters.');
+  });
+
+  // Real-time error clearing
+  const fname = document.getElementById('r-fname');
+  const email = document.getElementById('r-email');
+  const phone = document.getElementById('r-phone');
+  const city = document.getElementById('r-city');
+
+  fname?.addEventListener('input', () => {
+    const v = fname.value.trim();
+    if (!v) return clrInputError(fname, 'r-fname-err');
+    if (Validate.notEmpty(v)) setInputValid(fname, 'r-fname-err', 'Looks good');
+  });
+  email?.addEventListener('input', () => {
+    const v = email.value.trim();
+    if (!v) return clrInputError(email, 'r-email-err');
+    if (Validate.email(v)) setInputValid(email, 'r-email-err', 'Valid email');
+    else setInputError(email, 'r-email-err', 'Enter a valid email address.');
+  });
+  phone?.addEventListener('input', () => {
+    const v = phone.value.trim();
+    if (!v) return clrInputError(phone, 'r-phone-err');
+    if (Validate.phone(v)) setInputValid(phone, 'r-phone-err', 'Valid phone');
+    else setInputError(phone, 'r-phone-err', 'Enter a valid phone number.');
+  });
+  city?.addEventListener('input', () => {
+    const v = city.value.trim();
+    if (!v) return clrInputError(city, 'r-city-err');
+    if (Validate.notEmpty(v)) setInputValid(city, 'r-city-err', 'Looks good');
+  });
+
+  // Form submit
+  document.getElementById('registerForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const fname = document.getElementById('r-fname');
+    const email = document.getElementById('r-email');
+    const phone = document.getElementById('r-phone');
+    const pass  = document.getElementById('r-pass');
+    const city  = document.getElementById('r-city');
+    const terms = document.getElementById('r-terms');
+
+    clrErr('r-fname-err','r-email-err','r-phone-err','r-pass-err','r-city-err','r-terms-err');
+    [fname, email, phone, pass, city].forEach(el => el?.classList.remove('error'));
+
+    let ok = true;
+
+    if (!Validate.notEmpty(fname.value)) {
+      setInputError(fname, 'r-fname-err', 'First name is required.'); ok = false;
+    } else {
+      setInputValid(fname, 'r-fname-err', 'Looks good');
+    }
+    if (!Validate.notEmpty(email.value)) {
+      setInputError(email, 'r-email-err', 'Email is required.'); ok = false;
+    } else if (!Validate.email(email.value.trim())) {
+      setInputError(email, 'r-email-err', 'Enter a valid email address.'); ok = false;
+    } else {
+      setInputValid(email, 'r-email-err', 'Valid email');
+    }
+    if (phone.value.trim() && !Validate.phone(phone.value)) {
+      setInputError(phone, 'r-phone-err', 'Enter a valid phone number.'); ok = false;
+    } else if (phone.value.trim()) {
+      setInputValid(phone, 'r-phone-err', 'Valid phone');
+    }
+    if (!Validate.minLen(pass.value, 8)) {
+      setInputError(pass, 'r-pass-err', 'Password must be at least 8 characters.'); ok = false;
+    } else {
+      setInputValid(pass, 'r-pass-err', 'Looks good');
+    }
+    if (!Validate.notEmpty(city.value)) {
+      setInputError(city, 'r-city-err', 'Please enter your city or area.'); ok = false;
+    } else {
+      setInputValid(city, 'r-city-err', 'Looks good');
+    }
+    if (!terms.checked) {
+      setErr('r-terms-err', 'You must accept the terms to continue.'); ok = false;
+    }
+
+    if (!ok) return;
+
+    const fullName = `${fname.value.trim()} ${document.getElementById('r-lname').value.trim()}`.trim();
+    sessionStorage.setItem('fr_reg_success', '1');
+    sessionStorage.setItem('fr_pending_user', JSON.stringify({
+      name: fullName || fname.value.trim(),
+      email: email.value.trim(),
+      phone: phone.value.trim()
+    }));
+    showToast(`Account created for ${fname.value.trim()}. Please login.`, 'ok');
+    setTimeout(() => window.location.href = 'login.html', 900);
+  });
+});
+</script>
+</body>
+</html>

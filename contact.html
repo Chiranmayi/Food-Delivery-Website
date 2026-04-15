@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>FeastRush – Contact Us</title>
+<link rel="stylesheet" href="style.css"/>
+<style>
+/* ── CONTACT PAGE SPECIFIC ── */
+.contact-hero {
+  background: linear-gradient(135deg, #0D0D0D 0%, #1a0800 50%, #0D0D0D 100%);
+  padding: 80px var(--sp-xl) 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-hero::before {
+  content: '';
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(255,69,0,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.contact-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,69,0,0.12);
+  border: 1px solid rgba(255,69,0,0.3);
+  color: #FF6B35;
+  padding: 8px 20px;
+  border-radius: 100px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.contact-hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+.contact-hero h1 span {
+  background: linear-gradient(135deg, #FF6B35, #FFB703);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.contact-hero p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* ── INFO CARDS ROW ── */
+.contact-cards-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 48px var(--sp-xl) 0;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-info-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  transition: var(--ease);
+}
+.contact-info-card:hover {
+  border-color: rgba(255,69,0,0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+}
+
+.card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
+  background: rgba(255,69,0,0.1);
+  border: 1px solid rgba(255,69,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin: 0 auto 14px;
+}
+
+.contact-info-card h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.contact-info-card p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.contact-info-card a {
+  color: var(--brand);
+  font-size: 0.82rem;
+  font-weight: 600;
+  display: block;
+  margin-top: 6px;
+}
+
+/* ── MAIN SECTION ── */
+.contact-main {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 48px;
+  max-width: 1200px;
+  margin: 48px auto 0;
+  padding: 0 var(--sp-xl) 80px;
+  align-items: start;
+}
+
+/* Left side info */
+.contact-left h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.contact-left > p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  margin-bottom: 32px;
+}
+
+/* FAQ accordion */
+.faq-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+
+.faq-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 32px; }
+
+.faq-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.faq-q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text);
+  gap: 10px;
+  list-style: none;
+  transition: background var(--ease);
+}
+.faq-q:hover { background: rgba(255,69,0,0.04); }
+.faq-q::after { content: '+'; color: var(--brand); font-size: 1.2rem; flex-shrink: 0; }
+.faq-item.open .faq-q::after { content: '−'; }
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+  padding: 0 16px;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+.faq-item.open .faq-a { max-height: 200px; padding: 0 16px 14px; }
+
+/* Map card */
+.map-card {
+  border-radius: 16px;
+  overflow: hidden;
+  height: 180px;
+  border: 1px solid var(--border);
+  position: relative;
+  margin-top: 8px;
+}
+.map-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6) saturate(1.2);
+}
+.map-pin {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  font-size: 2rem;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+.map-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+/* Right: form card */
+.contact-form-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 36px;
+}
+
+.contact-form-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.contact-form-card > p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 28px;
+}
+
+.contact-form-wrap { display: flex; flex-direction: column; gap: 16px; }
+
+/* Topic pills */
+.topic-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+.topic-pill {
+  padding: 7px 14px;
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 99px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--ease);
+}
+.topic-pill.active, .topic-pill:hover {
+  background: rgba(255,69,0,0.1);
+  border-color: var(--brand);
+  color: var(--text);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1024px) {
+  .contact-cards-row { grid-template-columns: repeat(2, 1fr); }
+  .contact-main { grid-template-columns: 1fr; gap: 40px; }
+}
+
+@media (max-width: 768px) {
+  .contact-hero { padding: 60px var(--sp-sm) 40px; }
+  .contact-cards-row { 
+    grid-template-columns: repeat(2, 1fr); 
+    padding: 32px var(--sp-sm) 0; 
+  }
+  .contact-main { padding: 32px var(--sp-sm) 60px; margin-top: 32px; gap: 28px; }
+  .contact-form-card { padding: 24px 20px; }
+}
+
+@media (max-width: 480px) {
+  .contact-cards-row { grid-template-columns: 1fr; gap: 12px; }
+  .contact-info-card { 
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-align: left;
+    padding: 18px 16px;
+  }
+  .card-icon { margin: 0; flex-shrink: 0; }
+  .contact-hero h1 { font-size: 1.8rem; }
+  .contact-form-card { padding: 20px 16px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" style="position:sticky">
+  <a href="index.html" class="nav-brand">🔥 FeastRush</a>
+  <div class="nav-links" id="navLinks">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="index.html#menu" class="nav-link">Menu</a>
+    <a href="contact.html" class="nav-link active">Contact</a>
+    <button class="cart-btn" id="cartToggle">🛒 <span class="cart-badge" id="cartCount">0</span></button>
+    <div class="user-av" id="navAvatar">U</div>
+    <button class="btn-logout" onclick="logout()">Logout</button>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="index.html#menu" class="nav-link">Menu</a>
+  <a href="contact.html" class="nav-link active">Contact</a>
+  <button class="cart-btn" style="justify-content:center" onclick="document.getElementById('cartToggle').click()">🛒 Cart <span class="cart-badge" id="cartCountMobile">0</span></button>
+  <button class="btn-logout" onclick="logout()">Logout</button>
+</div>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h3>Your Cart 🛒</h3>
+    <button class="close-btn" id="closeCart">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div id="cartEmpty" class="cart-empty-state">
+    <div class="ei">🍽️</div>
+    <p>Your cart is empty</p>
+    <small>Add items from our menu!</small>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none">
+    <div class="cart-total-row">Total <strong id="cartTotal">₹0</strong></div>
+    <button class="btn-primary" onclick="placeOrder()">Place Order 🎉</button>
+  </div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="modal-bg" id="orderModal" style="display:none">
+  <div class="modal-card">
+    <div class="mico">🎉</div>
+    <h2>Order Placed!</h2>
+    <p>Your food is being prepared. Estimated delivery: <strong>28–35 mins</strong></p>
+    <div class="order-id-box" id="orderId"></div>
+    <button class="btn-primary" onclick="closeModal()">Track Order 📍</button>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="contact-hero">
+  <div class="contact-hero-badge">📬 Get in Touch</div>
+  <h1>We'd love to <span>hear from you</span></h1>
+  <p>Questions, feedback, partnerships, or just want to say hi — our team is always here and responds within 2 hours.</p>
+</div>
+
+<!-- INFO CARDS -->
+<div class="contact-cards-row">
+  <div class="contact-info-card">
+    <div class="card-icon">📞</div>
+    <h4>Call Us</h4>
+    <p>Mon–Sun, 24/7 support</p>
+    <a href="tel:+911800000000">+91 1800-FEAST-RUSH</a>
+  </div>
+  <div class="contact-info-card">
+    <div class="card-icon">✉️</div>
+    <h4>Email Us</h4>
+    <p>We reply within 2 hours</p>
+    <a href="mailto:support@feastrush.com">support@feastrush.com</a>
+  </div>
+  <div class="contact-info-card">
+    <div class="card-icon">💬</div>
+    <h4>Live Chat</h4>
+    <p>Instant help, always online</p>
+    <a href="#">Start chat →</a>
+  </div>
+  <div class="contact-info-card">
+    <div class="card-icon">📍</div>
+    <h4>Visit Us</h4>
+    <p>Koramangala, Bangalore</p>
+    <a href="#">Get directions →</a>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="contact-main">
+
+  <!-- LEFT: Info + FAQ -->
+  <div class="contact-left">
+    <h2>Before you reach out...</h2>
+    <p>You might find your answer faster in our FAQ. We've covered the most common questions below — if not, we're just a message away!</p>
+
+    <div class="faq-title">Frequently Asked Questions</div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">How do I track my order?</div>
+        <div class="faq-a">After placing your order, you'll receive a link to our live tracking page via SMS and email. You can see your rider's real-time location and estimated arrival time.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">What if my food arrives cold or damaged?</div>
+        <div class="faq-a">We guarantee the quality of every delivery. If your order arrives cold or damaged, contact us within 30 minutes and we'll offer a full refund or replacement — no questions asked.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">How do I apply a promo code?</div>
+        <div class="faq-a">Enter your promo code at checkout in the "Apply Code" field. Valid codes will instantly reduce your order total. Codes cannot be stacked or applied after payment.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">Can I cancel or modify my order?</div>
+        <div class="faq-a">Orders can be cancelled within 5 minutes of placing them. After that, the restaurant may have started preparing your food. Use the live tracking page or contact us immediately.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFAQ(this)">How do I become a restaurant partner?</div>
+        <div class="faq-a">We love welcoming new restaurant partners! Fill out the contact form and select "Partner With Us" as your topic — our partnerships team will reach out within 24 hours.</div>
+      </div>
+    </div>
+
+    <div class="map-card">
+      <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&q=80&auto=format&fit=crop" alt="Map of Bangalore"/>
+      <div class="map-pin">📍</div>
+      <div class="map-label">🏢 FeastRush HQ · Koramangala, Bangalore</div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Contact Form -->
+  <div class="contact-form-card">
+    <h3>Send us a message</h3>
+    <p>Fill the form below and we'll get back to you within 2 hours.</p>
+
+    <form id="contactForm" class="contact-form-wrap" novalidate>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="cf-name">Your Name</label>
+          <input type="text" id="cf-name" placeholder="Jane Doe" autocomplete="name"/>
+          <span class="field-err" id="cf-name-err"></span>
+        </div>
+        <div class="field">
+          <label for="cf-phone">Phone (Optional)</label>
+          <input type="tel" id="cf-phone" placeholder="+91 ..."/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="cf-email">Email Address</label>
+        <input type="email" id="cf-email" placeholder="you@email.com" autocomplete="email"/>
+        <span class="field-err" id="cf-email-err"></span>
+      </div>
+
+      <div class="field">
+        <label>Topic</label>
+        <div class="topic-pills" id="topicPills">
+          <button type="button" class="topic-pill active" data-topic="Order Issue">🛒 Order Issue</button>
+          <button type="button" class="topic-pill" data-topic="Delivery Problem">🛵 Delivery</button>
+          <button type="button" class="topic-pill" data-topic="Payment Issue">💳 Payment</button>
+          <button type="button" class="topic-pill" data-topic="Restaurant Feedback">🍽️ Feedback</button>
+          <button type="button" class="topic-pill" data-topic="Partner With Us">🤝 Partner</button>
+          <button type="button" class="topic-pill" data-topic="General Inquiry">💬 General</button>
+        </div>
+        <input type="hidden" id="cf-topic" value="Order Issue"/>
+        <span class="field-err" id="cf-topic-err"></span>
+      </div>
+
+      <div class="field">
+        <label for="cf-order">Order ID (if applicable)</label>
+        <input type="text" id="cf-order" placeholder="e.g. FR12345678" autocomplete="off"/>
+      </div>
+
+      <div class="field">
+        <label for="cf-msg">Message</label>
+        <textarea id="cf-msg" rows="5" placeholder="Describe your issue or query in detail..."></textarea>
+        <span class="field-err" id="cf-msg-err"></span>
+      </div>
+
+      <button type="submit" class="btn-primary">Send Message →</button>
+    </form>
+
+    <div id="contactSuccess" class="form-success" style="display:none">
+      <div class="success-icon" style="animation:bounceIn 0.5s ease">✅</div>
+      <h3>Message Sent!</h3>
+      <p>Thank you for reaching out. Our support team will reply to your email within 2 hours.</p>
+      <button class="btn-secondary" onclick="resetContactForm()" style="width:auto;padding:10px 24px;margin-top:8px">Send Another →</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="page-wrap">
+    <div class="footer-grid">
+      <div>
+        <span class="footer-brand-name">🔥 FeastRush</span>
+        <p class="footer-desc">Bringing the best food from your favourite restaurants right to your doorstep. Fast, fresh, and always delicious.</p>
+        <div class="social-row">
+          <a class="social-btn" href="#" aria-label="Twitter">𝕏</a>
+          <a class="social-btn" href="#" aria-label="Facebook">f</a>
+          <a class="social-btn" href="#" aria-label="Instagram">📷</a>
+          <a class="social-btn" href="#" aria-label="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="#">About Us</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Blog</a>
+      </div>
+      <div class="footer-col">
+        <h4>Support</h4>
+        <a href="contact.html">Contact Us</a><a href="#">FAQ</a><a href="#">Privacy Policy</a><a href="#">Terms</a>
+      </div>
+      <div class="footer-col">
+        <h4>Cities</h4>
+        <a href="#">Bangalore</a><a href="#">Mumbai</a><a href="#">Delhi</a><a href="#">Hyderabad</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 FeastRush Technologies Pvt. Ltd. All rights reserved. Made with ❤️ in India</span>
+      <div style="display:flex;gap:16px">
+        <a href="#" style="color:var(--text-muted);font-size:0.8rem">Privacy</a>
+        <a href="#" style="color:var(--text-muted);font-size:0.8rem">Terms</a>
+        <a href="#" style="color:var(--text-muted);font-size:0.8rem">Cookies</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+<script>
+'use strict';
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Topic pills
+  const pills = document.querySelectorAll('.topic-pill');
+  const topicInput = document.getElementById('cf-topic');
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      topicInput.value = pill.dataset.topic;
+      clrErr('cf-topic-err');
+    });
+  });
+
+  // Real-time error clearing
+  ['cf-name','cf-email','cf-msg'].forEach(id => {
+    document.getElementById(id)?.addEventListener('input', () => {
+      clrInputError(document.getElementById(id), id + '-err');
+    });
+  });
+
+  // Contact form submit
+  document.getElementById('contactForm').addEventListener('submit', e => {
+    e.preventDefault();
+
+    const name    = document.getElementById('cf-name');
+    const email   = document.getElementById('cf-email');
+    const topic   = document.getElementById('cf-topic');
+    const msg     = document.getElementById('cf-msg');
+
+    clrErr('cf-name-err','cf-email-err','cf-topic-err','cf-msg-err');
+    [name, email, msg].forEach(el => el?.classList.remove('error'));
+
+    let ok = true;
+
+    if (!Validate.notEmpty(name.value)) {
+      setInputError(name, 'cf-name-err', 'Please enter your name.'); ok = false;
+    }
+    if (!Validate.notEmpty(email.value)) {
+      setInputError(email, 'cf-email-err', 'Email address is required.'); ok = false;
+    } else if (!Validate.email(email.value.trim())) {
+      setInputError(email, 'cf-email-err', 'Enter a valid email address.'); ok = false;
+    }
+    if (!topic.value) {
+      setErr('cf-topic-err', 'Please select a topic.'); ok = false;
+    }
+    if (!Validate.minLen(msg.value, 10)) {
+      setInputError(msg, 'cf-msg-err', 'Message must be at least 10 characters.'); ok = false;
+    }
+
+    if (!ok) return;
+
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('contactSuccess').style.display = 'flex';
+    showToast("Message sent! We'll reply within 2 hours. ✅", 'ok');
+  });
+});
+
+function resetContactForm() {
+  document.getElementById('contactForm').reset();
+  document.getElementById('contactForm').style.display = 'flex';
+  document.getElementById('contactSuccess').style.display = 'none';
+  // Reset pills
+  document.querySelectorAll('.topic-pill').forEach((p,i) => p.classList.toggle('active', i===0));
+  document.getElementById('cf-topic').value = 'Order Issue';
+}
+
+function toggleFAQ(el) {
+  const item = el.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.faq-item').forEach(f => f.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
